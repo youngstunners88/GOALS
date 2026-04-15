@@ -1,50 +1,49 @@
-# $GOALS Protocol — Production Agent Directive
+# $GOALS Protocol
 
-## Scope
+> Self-regulating sports NFT platform with autonomous AI agents.
 
-You are working on a **sports NFT protocol** with autonomous agents. Code changes must survive three gates:
-1. **Type safety** (`npm run typecheck`)
-2. **Architecture rules** (`npm run arch:check`)
-3. **Agent sanity** (no blocking I/O in hot paths)
+## What This Is
 
-## Layer Map (Frontend)
+A sports-NFT protocol where dynamic player cards update in real-time and autonomous agents trade prediction markets on behalf of holders.
 
-```
-presentation/  → React components, pages, hooks
-application/   → Use cases, DTOs, services
-domain/        → Entities, value objects, domain events
-infrastructure/→ Web3, HTTP, storage adapters
-core/          → Effects, routing, state primitives
-```
+## Workspaces
 
-**Forbidden edges:**
-- `domain/` → `infrastructure/`
-- `application/` → `presentation/`
-- `infrastructure/` → `presentation/`
+- `/agents` — Self-regulating engine, arbitrage bots, debugging systems
+- `/contracts` — Solidity smart contracts (Base L2)
+- `/frontend` — React app with Clean Architecture
+- `/data-pipeline` — Real-time stadium data ingestion
+- `/infrastructure` — VM fleet, deployment scripts
+- `/ai-orchestrator` — Multi-agent routing and skill system
 
-## Agent Rules (Python)
+## Routing
 
-- Keep the self-regulating loop under **50ms per tick**
-- Use `asyncio` for all network calls; never `requests` in agent hot paths
-- Log health metrics in structured JSON
-- Configuration lives in `agents/configs/*.json`
+| Task | Go to | Read |
+|------|-------|------|
+| Fix or build agent logic | `/agents` | CONTEXT.md |
+| Deploy or modify contracts | `/contracts` | CONTEXT.md |
+| UI, pages, components | `/frontend` | CONTEXT.md |
+| Add stadium data source | `/data-pipeline` | CONTEXT.md |
+| Provision or deploy VMs | `/infrastructure` | CONTEXT.md |
+| Route tasks across tools | `/ai-orchestrator` | CLAUDE.md |
 
-## Smart Contract Rules
+## Naming Conventions
 
-- Update `GoalsProtocolNFT.sol` ABI in `frontend/src/infrastructure/blockchain/` after any function signature change
-- Estimate gas before adding loops or dynamic arrays
-- Use OpenZeppelin imports; do not roll your own access control
+- Agent configs: `agents/configs/*.json`
+- Decision records: `docs/decisions/YYYY-MM-DD-title.md`
+- Contract scripts: `contracts/scripts/*.js`
+- Frontend components: `PascalCase.tsx`
+- Domain entities: `PascalCase.ts` in `frontend/src/domain/`
 
-## Decision Matrix
+## Layer Rules (Clief Framework)
 
-| Task | First Step |
-|------|-----------|
-| New UI feature | Add use case in `application/`, then component in `presentation/` |
-| New agent capability | Add config → update engine → run unit test → update `AGENT_LEARNINGS.md` |
-| Contract bug | Write minimal repro script → fix → update ABI → run `npm run typecheck` |
-| Performance issue | Profile first (agent logs or browser profiler), then fix |
+1. **Layer 1 (Book)** — Dynamic NFT metadata updates. Commoditized. Keep simple, don't over-invest.
+2. **Layer 2 (Movie)** — Agent workflows, arbitrage flows, data pipelines. Business-specific. Protect and refine.
+3. **Layer 3 (Game)** — Systems that learn from their own execution data. This is where value lives. Build feedback loops here.
 
-## Autonomy Levels
+## Global Rules
 
-- **Full auto**: type fixes, tests, docs, UI polish, renaming, dependency updates
-- **Ask first**: contract deployments, mainnet interactions, agent restarts, infrastructure changes, tokenomics changes
+- Run `npm run typecheck` and `npm run arch:check` before finishing frontend work
+- Agent hot paths must stay under 50ms per tick; no blocking I/O
+- Every agent config lives in JSON, not hardcoded in Python
+- Contract changes require ABI updates in `frontend/src/infrastructure/blockchain/`
+- Update `AGENT_LEARNINGS.md` when you fix agent mistakes
