@@ -30,6 +30,7 @@ export * from './skills/multica-skill.js';
 export * from './skills/camofox-skill.js';
 export * from './skills/ecc-skill.js';
 export * from './skills/socraticode-skill.js';
+export * from './skills/ccgs-skill.js';
 
 import { initClawAgent } from './agents/claw-agent.js';
 import { initOmniAgent } from './agents/omni-agent.js';
@@ -43,6 +44,7 @@ import { initMulticaSkill } from './skills/multica-skill.js';
 import { initCamofoxSkill } from './skills/camofox-skill.js';
 import { initEccSkill } from './skills/ecc-skill.js';
 import { initSocratiCodeSkill } from './skills/socraticode-skill.js';
+import { initCcgsSkill } from './skills/ccgs-skill.js';
 import { log } from './core/state.js';
 
 export function initOrchestrator() {
@@ -58,5 +60,6 @@ export function initOrchestrator() {
   initCamofoxSkill();
   initEccSkill();
   initSocratiCodeSkill();
+  initCcgsSkill();
   log('Orchestrator initialized with vendor skills');
 }

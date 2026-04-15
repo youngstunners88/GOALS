@@ -32,6 +32,7 @@ const BROWSER_PATTERNS = /\b(scrape|blocked|cloudflare|stealth|headless|bot dete
 const CODE_INTEL_PATTERNS = /\b(semantic search|codebase intelligence|dependency graph|find all references|where is .* used|index codebase)\b/;
 const AGENT_MGMT_PATTERNS = /\b(assign task|delegate to agent|agent teammate|track progress|compound skills|managed agents|multica)\b/;
 const HARNESS_PATTERNS = /\b(performance optimization|agent harness|skills|instincts|security hardening|everything-claude-code|ecc)\b/;
+const CCGS_PATTERNS = /\bccgs\b|\bgame design\b|\bgdd\b|\bgame concept\b|\bmechanic design\b|\bprototype game\b|\bpenalty shootout\b|\bcorner kick\b|\bfree kick\b|\bfifa world cup\b|\bworld cup 2026\b/;
 
 function decideRoute(prompt: string): RouteDecision {
   const lower = prompt.toLowerCase();
@@ -94,6 +95,15 @@ function decideRoute(prompt: string): RouteDecision {
       skillId: 'ecc-skill',
       confidence: 0.85,
       reasoning: 'Agent harness/optimization requested',
+    };
+  }
+
+  if (CCGS_PATTERNS.test(lower)) {
+    return {
+      agentId: 'claw-agent',
+      skillId: 'ccgs-skill',
+      confidence: 0.88,
+      reasoning: 'Game design / CCGS task detected',
     };
   }
 
