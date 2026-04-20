@@ -1,43 +1,27 @@
 /**
  * ═══════════════════════════════════════════════════════════════
- * PRESENTATION - BATTLE PAGE (Placeholder)
+ * PRESENTATION - BATTLE PAGE (GAMING HUB)
  * ═══════════════════════════════════════════════════════════════
  */
 
-import React from 'react';
+import React, { useState } from 'react';
+import { GameHub } from '../components/games/GameHub.tsx';
+import { PenaltyShootoutGame } from '../components/games/PenaltyShootoutGame.tsx';
+import { CornerKickGame } from '../components/games/CornerKickGame.tsx';
+import { FreeKickGame } from '../components/games/FreeKickGame.tsx';
+import type { ActiveGame } from '../components/games/GameHub.tsx';
 
 export const BattlePage: React.FC = () => {
-  return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: '#0f172a',
-        padding: '60px 24px',
-        textAlign: 'center',
-        color: 'white',
-      }}
-    >
-      <div style={{ fontSize: '64px', marginBottom: '24px' }}>⚔️</div>
-      <h2 style={{ fontSize: '32px', fontWeight: 800, marginBottom: '16px' }}>
-        Battle Arena
-      </h2>
-      <p style={{ color: '#9ca3af', maxWidth: '500px', margin: '0 auto' }}>
-        Pit your players against others in strategic battles. 
-        Win to earn rewards and increase your players' stats.
-      </p>
-      <div
-        style={{
-          marginTop: '40px',
-          padding: '20px 40px',
-          background: 'rgba(59, 130, 246, 0.1)',
-          borderRadius: '12px',
-          display: 'inline-block',
-          color: '#3b82f6',
-          fontWeight: 600,
-        }}
-      >
-        Coming Soon
-      </div>
-    </div>
-  );
+  const [activeGame, setActiveGame] = useState<ActiveGame>('hub');
+
+  switch (activeGame) {
+    case 'penalty':
+      return <PenaltyShootoutGame onBack={() => setActiveGame('hub')} />;
+    case 'corner':
+      return <CornerKickGame onBack={() => setActiveGame('hub')} />;
+    case 'freekick':
+      return <FreeKickGame onBack={() => setActiveGame('hub')} />;
+    default:
+      return <GameHub onSelectGame={setActiveGame} />;
+  }
 };
